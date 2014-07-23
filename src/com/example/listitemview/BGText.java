@@ -1,24 +1,21 @@
 package com.example.listitemview;
 
-import android.R.color;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Rect;
 import android.graphics.RectF;
 import android.text.TextPaint;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 
 public class BGText extends View {
 
 	private TextPaint tp;
 	private String text;
-	private Rect bRect = new Rect();
-	private int BgColor = Color.BLUE;
+	private RectF bRect = null;
+	private int mBgColor = Color.BLUE;
 	private int mTextColor = Color.WHITE;
 	private int textSize;
 
@@ -38,11 +35,29 @@ public class BGText extends View {
 		textSize = 12;
 	}
 
+	@SuppressLint("DrawAllocation")
+	@Override
+	protected void onDraw(Canvas canvas) {
+		super.onDraw(canvas);
+		tp.setColor(mBgColor);
+
+		bRect = new RectF(0, 0, 0 + tp.measureText(text) + 4,
+				0 + tp.getTextSize() + 5);
+
+		if (text != null && !text.trim().equals("")) {
+			canvas.drawRoundRect(bRect, 2, 2, tp);
+			tp.setColor(mTextColor);
+			tp.setTextAlign(Paint.Align.LEFT);
+			canvas.drawText(text, 2, tp.getTextSize(), tp);
+		}
+	}
+
 	public void setText(String text) {
 		this.text = text;
 	}
 
 	public void setTextSize(int size) {
+		textSize = size;
 		tp.setTextSize(textSize);
 	}
 
@@ -51,21 +66,7 @@ public class BGText extends View {
 	}
 
 	public void setBackgroundColor(int color) {
-		BgColor = color;
+		mBgColor = color;
 	}
 
-	@Override
-	protected void onDraw(Canvas canvas) {
-		// TODO Auto-generated method stub
-		super.onDraw(canvas);
-		tp.setColor(Color.GRAY);
-
-		if (text != null && !text.trim().equals("")) {
-			canvas.drawRoundRect(new RectF(0, 0, 0 + tp.measureText(text) + 4,
-					0 + tp.getTextSize() + 5), 2, 2, tp);
-			tp.setColor(Color.RED);
-			tp.setTextAlign(Paint.Align.LEFT);
-			canvas.drawText(text, 2, tp.getTextSize(), tp);
-		}
-	}
 }
