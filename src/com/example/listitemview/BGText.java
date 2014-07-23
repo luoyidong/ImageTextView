@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.RectF;
 import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -35,14 +36,21 @@ public class BGText extends View {
 	protected void onDraw(Canvas canvas) {
 		// TODO Auto-generated method stub
 		super.onDraw(canvas);
-		tp.setColor(Color.BLUE);
+		tp.setColor(Color.GRAY);
+		tp.setTextSize(48);
 		tp.measureText(text);
-		tp.getTextBounds(text, 0, text.length()-1, bRect);
-		Log.i("tag", "the left is:"+bRect.left+" the top is:"+bRect.top+" the right is:"+bRect.right+" the bottom is:"+bRect.bottom);
-		canvas.drawRect(bRect, tp);
-		canvas.drawRect(50, 50, 50+bRect.right, 50+bRect.bottom, tp);
-		
-		canvas.drawText(text, 100, 100, tp);
+		tp.getTextBounds(text, 0, text.length(), bRect);
+		Log.i("tag", "the left is:" + bRect.left + " the top is:" + bRect.top
+				+ " the right is:" + bRect.right + " the bottom is:"
+				+ bRect.bottom);
+
+//		canvas.drawRect(50, 50, 50 + tp.measureText(text),
+//				50 + (bRect.bottom - bRect.top) + 8, tp);
+		canvas.drawRoundRect(new RectF(50, 50, 50 + tp.measureText(text)+4,
+				50 + (bRect.bottom - bRect.top)+5), 0, 2, tp);
+
+		tp.setColor(Color.WHITE);
+		canvas.drawText(text, 50+2, 63, tp);
 	}
 	// public void measureTextSize() {
 	// Paint pFont = new Paint();

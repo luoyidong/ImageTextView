@@ -55,6 +55,7 @@ public class MainActivity extends Activity {
 //		
 //		Log.i("tag","the textSize is:"+paint.measureText(text));
 //		Log.i("tag","the Bounds is:"+(bRect.bottom-bRect.top));
+//		Log.i("tag","the height is:"+(bRect.bottom-bRect.top)+" the width is:"+Math.abs((bRect.left-bRect.right)));
 
 /*		this.lv = (ListView) this.findViewById(R.id.myList);
 
